@@ -1,0 +1,70 @@
+{
+  description = "LaTeX Dev Shell";
+
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    flake-parts,
+    ...
+  }:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = ["x86_64-linux" "aarch64-linux"];
+
+      perSystem = {
+        system,
+        pkgs,
+        ...
+      }: let
+        pkgs = import nixpkgs {
+          inherit system;
+        };
+      in {
+        devShells.default = pkgs.mkShell {
+          buildInputs = with pkgs; [
+            (texlive.combine {
+              inherit
+                (texlive)
+                scheme-full
+                framed
+                float
+                titlesec
+                multirow
+                wrapfig
+                makecell
+                environ
+                biblatex
+                biber
+                fvextra
+                upquote
+                catchfile
+                xstring
+                csquotes
+                minted
+                dejavu
+                comment
+                footmisc
+                xltabular
+                ltablex
+                dvisvgm
+                dvipng
+                amsmath
+                amstex
+                unicode-math
+                ulem
+                hyperref
+                capt-of
+                latex-bin
+                latexmk
+                ;
+            })
+            python311Packages.pygments
+          ];
+        };
+      };
+    };
+}

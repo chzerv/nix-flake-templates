@@ -7,6 +7,10 @@
         path = ./go;
         description = "Start a Go project";
       };
+      latex = {
+        path = ./latex;
+        description = "Start a LaTeX project";
+      };
     };
   };
 }
