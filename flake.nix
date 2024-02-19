@@ -11,6 +11,10 @@
         path = ./latex;
         description = "Start a LaTeX project";
       };
+      typst = {
+        path = ./typst;
+        description = "Start a Typst project";
+      };
     };
   };
 }
