@@ -15,6 +15,10 @@
         path = ./typst;
         description = "Start a Typst project";
       };
+      rust = {
+        path = ./rust;
+        description = "Start a Rust project";
+      };
     };
   };
 }
