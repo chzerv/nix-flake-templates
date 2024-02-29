@@ -53,6 +53,13 @@ cargo generate-lockfile
 > nix fmt
 > ```
 
+## Terraform
+
+```shell
+mkdir my-tf-proj && cd my-tf-proj
+nix flake init -t github:chzerv/nix-flake-templates#terraform
+```
+
 ## LaTeX
 
 ```shell
@@ -72,4 +79,4 @@ nix flake init -t github:chzerv/nix-flake-templates#typst
 - [x] Rust
 - [ ] Python
 - [ ] Ansible
-- [ ] Terraform
+- [x] Terraform

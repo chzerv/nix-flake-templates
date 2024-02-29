@@ -19,6 +19,10 @@
         path = ./rust;
         description = "Start a Rust project";
       };
+      terraform = {
+        path = ./terraform;
+        description = "Start a Terraform project";
+      };
     };
   };
 }
