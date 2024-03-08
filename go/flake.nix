@@ -3,11 +3,16 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
+
     gomod2nix = {
       url = "github:tweag/gomod2nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Project-wide formatter
+    treefmt-nix.url = "github:numtide/treefmt-nix";
   };
 
   outputs = inputs @ {
@@ -20,9 +25,14 @@
     flake-parts.lib.mkFlake {inherit inputs;} {
       systems = ["x86_64-linux" "aarch64-linux"];
 
+      imports = [
+        inputs.treefmt-nix.flakeModule
+      ];
+
       perSystem = {
         system,
         pkgs,
+        config,
         ...
       }: let
         pkgs = import nixpkgs {
@@ -30,8 +40,6 @@
           overlays = [gomod2nix.overlays.default];
         };
       in {
-        formatter = pkgs.treefmt;
-
         packages = {
           default = pkgs.buildGoApplication {
             pname = "my-app";
@@ -45,6 +53,9 @@
         };
 
         devShells.default = pkgs.mkShell {
+          inputsFrom = [
+            config.treefmt.build.devShell
+          ];
           buildInputs = with pkgs; [
             go
             go-tools
@@ -60,6 +71,18 @@
             echo -e "or 'gomod2nix import' to import dependencies!"
             echo -e "#####################################################################"
           '';
+        };
+
+        # Formatting
+        treefmt.config = {
+          projectRootFile = "go.mod";
+          programs = {
+            alejandra.enable = true;
+            gofumpt.enable = true;
+          };
+          settings.formatter = {
+            gofumpt.includes = ["*.go"];
+          };
         };
       };
     };
