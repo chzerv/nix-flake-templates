@@ -23,6 +23,10 @@
         path = ./terraform;
         description = "Start a Terraform project";
       };
+      gleam = {
+        path = ./gleam;
+        description = "Start a Gleam project";
+      };
     };
   };
 }

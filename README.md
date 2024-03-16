@@ -53,6 +53,16 @@ cargo generate-lockfile
 > nix fmt
 > ```
 
+## Gleam
+
+Simple template that just installs `Gleam`, `Erlang` and `rebar3`, according to the [Gleam docs](https://gleam.run/getting-started/installing/)
+
+```shell
+mkdir my-gleam-proj && cd my-gleam-proj
+nix flake init -t github:chzerv/nix-flake-templates#gleam
+
+gleam new .
+```
 ## Terraform
 
 ```shell
